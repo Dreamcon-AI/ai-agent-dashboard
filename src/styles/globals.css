@@ -4,5 +4,6 @@
 @tailwind utilities;
 
 body {
-  @apply m-0 font-sans;
+  margin: 0;
+  font-family: sans-serif;
 }
