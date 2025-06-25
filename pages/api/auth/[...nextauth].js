@@ -7,27 +7,24 @@ export default NextAuth({
       name: "Credentials",
       credentials: {
         username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
+        password: { label: "Password", type: "password" }
       },
-      async authorize(credentials, req) {
-        // 🔐 Replace this with your real auth logic
+      async authorize(credentials) {
         const { username, password } = credentials;
 
-        // Example: hardcoded login (replace with DB or API check)
-        if (username === "admin" && password === "test123") {
+        // Simple hardcoded auth (replace with DB logic later)
+        if (username === "admin" && password === "password123") {
           return { id: 1, name: "Admin User", email: "admin@example.com" };
         }
 
-        // ❌ Invalid login
+        // If login fails
         return null;
-      },
-    }),
+      }
+    })
   ],
   pages: {
-    signIn: "/", // use your home page as login
+    signIn: "/", // Redirect to homepage login form
+    error: "/",  // Redirect back on failure
   },
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET
 });

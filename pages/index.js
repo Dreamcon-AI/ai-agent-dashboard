@@ -1,9 +1,12 @@
-import Login from "../components/Login";
+import { useSession } from "next-auth/react";
+import Login from "../src/components/Login";
 import AIAgentDashboard from "../src/AIAgentDashboard";
 
 export default function Home() {
-  const isLoggedIn = typeof window !== "undefined" && localStorage.getItem("token");
+  const { data: session, status } = useSession();
 
-  if (!isLoggedIn) return <Login />;
+  if (status === "loading") return <div>Loading...</div>;
+  if (!session) return <Login />;
+
   return <AIAgentDashboard />;
 }
