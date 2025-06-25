@@ -1,5 +1,5 @@
-import AIAgentDashboard from "../AIAgentDashboard";
+import AIAgentDashboard from "../src/AIAgentDashboard";
 
-export default function HomePage() {
+export default function Home() {
   return <AIAgentDashboard />;
 }
