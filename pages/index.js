@@ -1,5 +1,5 @@
 import { useSession } from "next-auth/react";
-import Login from "../src/components/Login";
+import Login from '@/components/Login'; // or relative to file location
 import AIAgentDashboard from "../src/AIAgentDashboard";
 
 export default function Home() {
