@@ -12,7 +12,6 @@
     "bcrypt": "^6.0.0",
     "clsx": "^1.2.1",
     "cors": "^2.8.5",
-    "eslint": "^8.56.0",
     "express-fileupload": "^1.5.1",
     "framer-motion": "^10.16.1",
     "lucide-react": "^0.283.0",
@@ -29,17 +28,13 @@
     "uuid": "^9.0.1",
     "web-vitals": "^3.3.1"
   },
-"scripts": {
-  "dev": "next dev",
-  "build": "next build",
-  "start": "next start"
-},
-
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "next"
   },
   "browserslist": {
     "production": [
@@ -53,5 +48,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:5003"
+  "proxy": "http://localhost:5003",
+  "devDependencies": {
+    "eslint": "^9.29.0",
+    "eslint-config-next": "^15.3.4"
+  }
 }
