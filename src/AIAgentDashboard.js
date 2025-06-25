@@ -1,3 +1,4 @@
+import { useSession, signIn, signOut } from "next-auth/react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { useState } from "react";
@@ -21,8 +22,6 @@ import OnboardingAgent from "./Agents/OnboardingAgent";
 import TakeoffAgent from "./Agents/TakeoffAgent";
 import LeadAgent from './Agents/LeadAgent';
 import FleetAgent from './Agents/FleetAgent';
-
-
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
@@ -104,7 +103,7 @@ const agents = {
       agent: "FleetAgent",
       title: "Fleet Management Agent",
       instructions: 
-        "Manages the service, files, logs, and availability of the truck and equiptment fleet.",
+        "Manages the service, files, logs, and availability of the truck and equipment fleet.",
       component: FleetAgent,
     }
   ],
@@ -131,29 +130,28 @@ const agents = {
     },
   ],
 
- Sales: [
+  Sales: [
     {
-  dept: "Leads",
-  agent: "LeadAgent",
-  title: "Lead Agent",
-  instructions:
-    "Find projects that have fence and/or gates for us to bid. This agent will find projects and download plans and specifications.",
-  component: LeadAgent,
-  },  
-  { dept: "Bidding/Estimating",
-    agent: "TakeoffAgent",
-    title: "Takeoff Agent",
-    instructions:
-      "Upload plans and describe scope. This agent will generate a full material list, cost summary, and optionally a submittal.",
-    component: TakeoffAgent,
-  },
-
-],
+      dept: "Leads",
+      agent: "LeadAgent",
+      title: "Lead Agent",
+      instructions:
+        "Find projects that have fence and/or gates for us to bid. This agent will find projects and download plans and specifications.",
+      component: LeadAgent,
+    },
+    {
+      dept: "Bidding/Estimating",
+      agent: "TakeoffAgent",
+      title: "Takeoff Agent",
+      instructions:
+        "Upload plans and describe scope. This agent will generate a full material list, cost summary, and optionally a submittal.",
+      component: TakeoffAgent,
+    },
+  ],
 };
 
-
-
 export default function AIAgentDashboard() {
+  const { data: session, status } = useSession();
   const [selectedDivision, setSelectedDivision] = useState(divisions[0]);
   const [activeAgent, setActiveAgent] = useState(null);
   const [output, setOutput] = useState(null);
@@ -167,8 +165,43 @@ export default function AIAgentDashboard() {
     setProposalName("");
   };
 
+  if (status === "loading") {
+    return (
+      <div className="p-10 text-center text-gray-700 text-lg">
+        Loading session...
+      </div>
+    );
+  }
+
+  if (!session) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <img src="/dc.png" alt="DreamCon Logo" className="h-72 mb-6" />
+        <h1 className="text-4xl font-bold mb-4 text-gray-800">
+          AI Agent Dashboard
+        </h1>
+        <p className="mb-6 text-gray-600">You must be signed in to continue.</p>
+        <Button
+          onClick={() => signIn("github")}
+          className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700"
+        >
+          Sign in with GitHub
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="p-8 bg-gradient-to-br from-gray-50 via-gray-100 to-white bg-opacity-70 min-h-screen font-sans text-white">
+      <div className="flex justify-end mb-6">
+        <Button
+          onClick={() => signOut()}
+          className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700"
+        >
+          Sign Out ({session.user.name})
+        </Button>
+      </div>
+
       <div className="flex flex-col items-center mb-10">
         <img
           src="/dc.png"
