@@ -1,5 +1,8 @@
 /* styles/globals.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 body {
-  margin: 0;
-  font-family: sans-serif;
+  @apply m-0 font-sans;
 }

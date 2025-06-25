@@ -1,47 +1,41 @@
-// File: frontend/components/Login.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
+export default function Login() {
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-     const res = await axios.post("/api/login",  {
-        email,
-        password,
-      });
-      if (res.data.success) {
-        localStorage.setItem("token", res.data.token);
-        navigate("/dashboard");
-      } else {
-        setError("Invalid email or password");
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Login failed. Please try again.");
+
+    const res = await signIn("credentials", {
+      redirect: false,
+      username,
+      password,
+    });
+
+    if (res.error) {
+      setError("Invalid credentials");
+    } else {
+      window.location.href = "/"; // Reload to show dashboard
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleLogin}
         className="bg-white p-6 rounded shadow-md space-y-4 w-full max-w-sm"
       >
-        <h2 className="text-xl font-semibold">Login to AI Agent Dashboard</h2>
+        <h2 className="text-xl font-semibold text-center">AI Agent Dashboard Login</h2>
         {error && <p className="text-red-600 text-sm">{error}</p>}
         <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           className="w-full p-2 border rounded"
           required
         />
@@ -62,6 +56,4 @@ const Login = () => {
       </form>
     </div>
   );
-};
-
-export default Login;
+}
