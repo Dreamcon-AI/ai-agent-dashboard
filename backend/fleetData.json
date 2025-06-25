@@ -1,0 +1,26 @@
+[
+  {
+    "id": "4ac15e6d-9a72-4a70-87f0-20debfed1089",
+    "name": "Bobcat",
+    "type": "Bobcat T66",
+    "status": "available"
+  },
+  {
+    "id": "a82f73ed-1017-40f1-9d5b-bdcfffdd5ac7",
+    "name": "Red F550",
+    "type": "2015 Ford F550 Red",
+    "status": "available"
+  },
+  {
+    "id": "c4e244fd-3b8e-40e3-8e39-bf575b1ada9f",
+    "name": "Excavator",
+    "type": "2023 Takeuchi TB240",
+    "status": "available"
+  },
+  {
+    "id": "18fe0879-e951-4190-8594-7eb96cf33e2f",
+    "name": "Big Truck",
+    "type": "2024 Ford F750 Hooklift White",
+    "status": "available"
+  }
+]
