@@ -1,6 +1,5 @@
-// File: pages/index.js
-import Login from "@/components/Login";
+import AIAgentDashboard from "../AIAgentDashboard";
 
-export default function Home() {
-  return <Login />;
+export default function HomePage() {
+  return <AIAgentDashboard />;
 }

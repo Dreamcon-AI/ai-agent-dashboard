@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     setError("");
     try {
-      const res = await axios.post("http://localhost:5005/api/login", {
+     const res = await axios.post("/api/login",  {
         email,
         password,
       });

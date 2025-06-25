@@ -13,7 +13,6 @@ import {
 import { Loader2, X } from "lucide-react";
 import { toast } from "sonner";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DirectoryAgent from "./Agents/DirectoryAgent";
 import FinancialPlanningAgent from "./Agents/FinancialPlanningAgent";
 import SchedulingAgent from "./Agents/SchedulingAgent"; 
@@ -22,6 +21,7 @@ import OnboardingAgent from "./Agents/OnboardingAgent";
 import TakeoffAgent from "./Agents/TakeoffAgent";
 import LeadAgent from './Agents/LeadAgent';
 import FleetAgent from './Agents/FleetAgent';
+
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
 
