@@ -1,26 +1,29 @@
-// pages/index.js
 import { getSession } from "next-auth/react";
-import AIAgentDashboard from "../src/AIAgentDashboard";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
-export async function getServerSideProps(context) {
-  const session = await getSession(context);
+export default function DashboardRedirect() {
+  const router = useRouter();
 
-  if (!session || !session.user?.company) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    };
-  }
+  useEffect(() => {
+    async function redirect() {
+      const session = await getSession();
 
-  return {
-    props: { session },
-  };
-}
+      if (!session?.user?.company) {
+        router.push("/auth/login"); // fallback
+        return;
+      }
 
-export default function Home({ session }) {
-  if (!session?.user?.company) return <div>Loading...</div>;
+      const company = session.user.company.toLowerCase();
 
-  return <AIAgentDashboard company={session.user.company} />;
+      if (company.includes("zochert")) router.push("/dashboard/zochert");
+      else if (company.includes("hargrove")) router.push("/dashboard/hargrove");
+      else if (company.includes("s&s") || company.includes("ss")) router.push("/dashboard/ss");
+      else router.push("/dashboard/default");
+    }
+
+    redirect();
+  }, [router]);
+
+  return null;
 }
