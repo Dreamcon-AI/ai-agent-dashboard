@@ -1,4 +1,3 @@
-import { useSession, signIn, signOut } from "next-auth/react";
 import { Card, CardContent } from "./components/ui/card";
 import { Button } from "./components/ui/button";
 import { useState } from "react";
@@ -151,7 +150,6 @@ const agents = {
 };
 
 export default function AIAgentDashboard() {
-  const { data: session, status } = useSession();
   const [selectedDivision, setSelectedDivision] = useState(divisions[0]);
   const [activeAgent, setActiveAgent] = useState(null);
   const [output, setOutput] = useState(null);
@@ -165,42 +163,9 @@ export default function AIAgentDashboard() {
     setProposalName("");
   };
 
-  if (status === "loading") {
-    return (
-      <div className="p-10 text-center text-gray-700 text-lg">
-        Loading session...
-      </div>
-    );
-  }
-
-  if (!session) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-        <img src="/dc.png" alt="DreamCon Logo" className="h-72 mb-6" />
-        <h1 className="text-4xl font-bold mb-4 text-gray-800">
-          AI Agent Dashboard
-        </h1>
-        <p className="mb-6 text-gray-600">You must be signed in to continue.</p>
-        <Button
-          onClick={() => signIn("github")}
-          className="bg-indigo-600 text-white px-6 py-2 rounded-full hover:bg-indigo-700"
-        >
-          Sign in with GitHub
-        </Button>
-      </div>
-    );
-  }
-
   return (
-    <div className="p-8 bg-gradient-to-br from-gray-50 via-gray-100 to-white bg-opacity-70 min-h-screen font-sans text-white">
-      <div className="flex justify-end mb-6">
-        <Button
-          onClick={() => signOut()}
-          className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700"
-        >
-          Sign Out ({session.user.name})
-        </Button>
-      </div>
+<div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-white">
+      
 
       <div className="flex flex-col items-center mb-10">
         <img
@@ -208,7 +173,7 @@ export default function AIAgentDashboard() {
           alt="DreamCon Logo"
           className="h-72 mb-6 object-contain bg-transparent"
         />
-        <h1 className="text-5xl font-extrabold text-center text-gray-700 drop-shadow-sm tracking-tight">
+        <h1 className="text-5xl font-bold text-center text-gray-800 drop-shadow-md tracking-tight mb-4">
           AI Agent
         </h1>
       </div>
@@ -222,7 +187,7 @@ export default function AIAgentDashboard() {
               className={`w-48 h-14 flex items-center justify-center rounded-full text-md font-semibold transition-all shadow-md ${
                 selectedDivision === div
                   ? "bg-gray-300 text-gray-800"
-                  : "bg-gray-600 text-white hover:bg-indigo-300 hover:text-black"
+                  : "bg-gray-60"
               }`}
             >
               {div}

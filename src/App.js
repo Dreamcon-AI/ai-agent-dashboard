@@ -1,5 +1,6 @@
+import '@/styles/globals.css'; // ✅ make sure this path is correct
 import React from 'react';
-import AIAgentDashboard from './AIAgentDashboard'; // adjust if file path differs
+import AIAgentDashboard from './AIAgentDashboard'; // path is good
 
 function App() {
   return (
@@ -10,5 +11,3 @@ function App() {
 }
 
 export default App;
-
-
