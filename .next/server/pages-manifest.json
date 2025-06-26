@@ -3,8 +3,6 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/": "pages/index.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/login": "pages/login.js",
-  "/dashboard/hargrove": "pages/dashboard/hargrove.js",
-  "/dashboard/zochert": "pages/dashboard/zochert.js"
+  "/dashboard/zochert": "pages/dashboard/zochert.js",
+  "/login": "pages/login.js"
 }
