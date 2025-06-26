@@ -14,15 +14,48 @@ import { toast } from "sonner";
 import * as pdfjsLib from "pdfjs-dist/build/pdf";
 import DirectoryAgent from "./Agents/DirectoryAgent";
 import FinancialPlanningAgent from "./Agents/FinancialPlanningAgent";
-import SchedulingAgent from "./Agents/SchedulingAgent"; 
+import SchedulingAgent from "./Agents/SchedulingAgent";
 import LegalReviewAgent from "./Agents/LegalReviewAgent";
 import OnboardingAgent from "./Agents/OnboardingAgent";
 import TakeoffAgent from "./Agents/TakeoffAgent";
 import LeadAgent from './Agents/LeadAgent';
 import FleetAgent from './Agents/FleetAgent';
-
+import Image from "next/image";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+
+const companyThemes = {
+  "Zochert Fence": {
+    logo: "/logos/zochert.png",
+    bg: "from-slate-700 via-slate-600 to-gray-600",
+    bubble: "bg-slate-300 text-gray-800",
+  },
+  "Hargrove Fence": {
+    logo: "/logos/hargrove.png",
+    bg: "from-green-700 via-green-600 to-green-500",
+    bubble: "bg-green-300 text-green-900",
+  },
+  "S&S Fence": {
+    logo: "/logos/ss.png",
+    bg: "from-blue-700 via-blue-600 to-blue-500",
+    bubble: "bg-blue-300 text-blue-900",
+  },
+};
+
+const companyStyles = {
+  "Zochert Fence": {
+    bgGradient: "from-gray-600 via-gray-400 to-gray-300",
+    logo: "/logos/zochert.png",
+  },
+  "Hargrove Fence": {
+    bgGradient: "from-green-700 via-green-500 to-green-300",
+    logo: "/logos/hargrove.png",
+  },
+  "S&S Fence": {
+    bgGradient: "from-blue-800 via-blue-600 to-blue-400",
+    logo: "/logos/ss.png",
+  },
+};
 
 const divisions = [
   "HR",
@@ -101,10 +134,10 @@ const agents = {
       dept: "Fleet",
       agent: "FleetAgent",
       title: "Fleet Management Agent",
-      instructions: 
+      instructions:
         "Manages the service, files, logs, and availability of the truck and equipment fleet.",
       component: FleetAgent,
-    }
+    },
   ],
 
   Legal: [
@@ -149,7 +182,7 @@ const agents = {
   ],
 };
 
-export default function AIAgentDashboard() {
+export default function AIAgentDashboard({ company }) {
   const [selectedDivision, setSelectedDivision] = useState(divisions[0]);
   const [activeAgent, setActiveAgent] = useState(null);
   const [output, setOutput] = useState(null);
@@ -164,37 +197,50 @@ export default function AIAgentDashboard() {
   };
 
   return (
-<div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-white">
-      
 
-      <div className="flex flex-col items-center mb-10">
-        <img
-          src="/dc.png"
-          alt="DreamCon Logo"
-          className="h-72 mb-6 object-contain bg-transparent"
-        />
-        <h1 className="text-5xl font-bold text-center text-gray-800 drop-shadow-md tracking-tight mb-4">
-          AI Agent
-        </h1>
-      </div>
+<div className={`min-h-screen bg-gradient-to-br ${companyStyles[company]?.bgGradient || "from-gray-600 via-gray-400 to-gray-300"}`}>
+  {/* Top-left logo */}
+  <div className="absolute top-6 left-6 z-50">
+    <div className="relative w-[15rem] h-[15rem]">
+      <Image
+        src={`/logos/${company?.toLowerCase() || "dc"}.png`}
+        alt={`${company || "DreamCon"} Logo`}
+        fill
+        className="object-contain"
+        priority
+      />
+    </div>
+  </div>
 
-      <div className="mb-8 overflow-x-auto">
-        <div className="inline-flex gap-4 px-4 py-2 rounded-full bg-gray-700 shadow-inner border border-gray-600 w-full justify-center">
-          {divisions.map((div) => (
-            <button
-              key={div}
-              onClick={() => setSelectedDivision(div)}
-              className={`w-48 h-14 flex items-center justify-center rounded-full text-md font-semibold transition-all shadow-md ${
-                selectedDivision === div
-                  ? "bg-gray-300 text-gray-800"
-                  : "bg-gray-60"
-              }`}
-            >
-              {div}
-            </button>
-          ))}
-        </div>
-      </div>
+  {/* Spacer to maintain layout */}
+  <div className="h-40" />
+
+  {/* Page Title */}
+  <div className="flex flex-col items-center mb-10">
+    <h1 className="text-5xl font-bold text-center text-gray-800 drop-shadow-md tracking-tight mb-4">
+      AI Agent Dashboard
+    </h1>
+  </div>
+
+
+  <div className="mb-8 overflow-x-auto">
+    <div className="inline-flex gap-4 px-4 py-2 rounded-full bg-gray-700 shadow-inner border border-gray-600 w-full justify-center">
+      {divisions.map((div) => (
+        <button
+          key={div}
+          onClick={() => setSelectedDivision(div)}
+          className={`w-48 h-14 flex items-center justify-center rounded-full text-md font-bold shadow-md transition-colors duration-200 ease-in-out ${
+            selectedDivision === div
+              ? "bg-gray-200 text-gray-800"
+              : "bg-gray-400 text-gray-700 hover:bg-gray-200"
+          }`}
+        >
+          {div}
+        </button>
+      ))}
+    </div>
+  </div>
+
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
         {agents[selectedDivision]?.map(
