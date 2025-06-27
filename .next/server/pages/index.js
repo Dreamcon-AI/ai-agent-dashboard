@@ -41,7 +41,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ DashboardRedirect)\n/* harmony export */ });\n/* harmony import */ var next_auth_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next-auth/react */ \"next-auth/react\");\n/* harmony import */ var next_auth_react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_auth_react__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ \"react\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! next/router */ \"(pages-dir-node)/./node_modules/next/router.js\");\n/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);\n\n\n\nfunction DashboardRedirect() {\n    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_2__.useRouter)();\n    (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)({\n        \"DashboardRedirect.useEffect\": ()=>{\n            async function redirect() {\n                const session = await (0,next_auth_react__WEBPACK_IMPORTED_MODULE_0__.getSession)();\n                if (!session?.user?.company) {\n                    router.push(\"/auth/login\"); // fallback\n                    return;\n                }\n                const company = session.user.company.toLowerCase();\n                if (company.includes(\"zochert\")) router.push(\"/dashboard/zochert\");\n                else if (company.includes(\"hargrove\")) router.push(\"/dashboard/hargrove\");\n                else if (company.includes(\"s&s\") || company.includes(\"ss\")) router.push(\"/dashboard/ss\");\n                else router.push(\"/dashboard/default\");\n            }\n            redirect();\n        }\n    }[\"DashboardRedirect.useEffect\"], [\n        router\n    ]);\n    return null;\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHBhZ2VzLWRpci1ub2RlKS8uL3BhZ2VzL2luZGV4LmpzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7QUFBNkM7QUFDWDtBQUNNO0FBRXpCLFNBQVNHO0lBQ3RCLE1BQU1DLFNBQVNGLHNEQUFTQTtJQUV4QkQsZ0RBQVNBO3VDQUFDO1lBQ1IsZUFBZUk7Z0JBQ2IsTUFBTUMsVUFBVSxNQUFNTiwyREFBVUE7Z0JBRWhDLElBQUksQ0FBQ00sU0FBU0MsTUFBTUMsU0FBUztvQkFDM0JKLE9BQU9LLElBQUksQ0FBQyxnQkFBZ0IsV0FBVztvQkFDdkM7Z0JBQ0Y7Z0JBRUEsTUFBTUQsVUFBVUYsUUFBUUMsSUFBSSxDQUFDQyxPQUFPLENBQUNFLFdBQVc7Z0JBRWhELElBQUlGLFFBQVFHLFFBQVEsQ0FBQyxZQUFZUCxPQUFPSyxJQUFJLENBQUM7cUJBQ3hDLElBQUlELFFBQVFHLFFBQVEsQ0FBQyxhQUFhUCxPQUFPSyxJQUFJLENBQUM7cUJBQzlDLElBQUlELFFBQVFHLFFBQVEsQ0FBQyxVQUFVSCxRQUFRRyxRQUFRLENBQUMsT0FBT1AsT0FBT0ssSUFBSSxDQUFDO3FCQUNuRUwsT0FBT0ssSUFBSSxDQUFDO1lBQ25CO1lBRUFKO1FBQ0Y7c0NBQUc7UUFBQ0Q7S0FBTztJQUVYLE9BQU87QUFDVCIsInNvdXJjZXMiOlsiQzpcXFVzZXJzXFxIZW5yeUZvc3RlclxcZHJlYW1jb24tZGFzaGJvYXJkXFxwYWdlc1xcaW5kZXguanMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgZ2V0U2Vzc2lvbiB9IGZyb20gXCJuZXh0LWF1dGgvcmVhY3RcIjtcclxuaW1wb3J0IHsgdXNlRWZmZWN0IH0gZnJvbSBcInJlYWN0XCI7XHJcbmltcG9ydCB7IHVzZVJvdXRlciB9IGZyb20gXCJuZXh0L3JvdXRlclwiO1xyXG5cclxuZXhwb3J0IGRlZmF1bHQgZnVuY3Rpb24gRGFzaGJvYXJkUmVkaXJlY3QoKSB7XHJcbiAgY29uc3Qgcm91dGVyID0gdXNlUm91dGVyKCk7XHJcblxyXG4gIHVzZUVmZmVjdCgoKSA9PiB7XHJcbiAgICBhc3luYyBmdW5jdGlvbiByZWRpcmVjdCgpIHtcclxuICAgICAgY29uc3Qgc2Vzc2lvbiA9IGF3YWl0IGdldFNlc3Npb24oKTtcclxuXHJcbiAgICAgIGlmICghc2Vzc2lvbj8udXNlcj8uY29tcGFueSkge1xyXG4gICAgICAgIHJvdXRlci5wdXNoKFwiL2F1dGgvbG9naW5cIik7IC8vIGZhbGxiYWNrXHJcbiAgICAgICAgcmV0dXJuO1xyXG4gICAgICB9XHJcblxyXG4gICAgICBjb25zdCBjb21wYW55ID0gc2Vzc2lvbi51c2VyLmNvbXBhbnkudG9Mb3dlckNhc2UoKTtcclxuXHJcbiAgICAgIGlmIChjb21wYW55LmluY2x1ZGVzKFwiem9jaGVydFwiKSkgcm91dGVyLnB1c2goXCIvZGFzaGJvYXJkL3pvY2hlcnRcIik7XHJcbiAgICAgIGVsc2UgaWYgKGNvbXBhbnkuaW5jbHVkZXMoXCJoYXJncm92ZVwiKSkgcm91dGVyLnB1c2goXCIvZGFzaGJvYXJkL2hhcmdyb3ZlXCIpO1xyXG4gICAgICBlbHNlIGlmIChjb21wYW55LmluY2x1ZGVzKFwicyZzXCIpIHx8IGNvbXBhbnkuaW5jbHVkZXMoXCJzc1wiKSkgcm91dGVyLnB1c2goXCIvZGFzaGJvYXJkL3NzXCIpO1xyXG4gICAgICBlbHNlIHJvdXRlci5wdXNoKFwiL2Rhc2hib2FyZC9kZWZhdWx0XCIpO1xyXG4gICAgfVxyXG5cclxuICAgIHJlZGlyZWN0KCk7XHJcbiAgfSwgW3JvdXRlcl0pO1xyXG5cclxuICByZXR1cm4gbnVsbDtcclxufVxyXG4iXSwibmFtZXMiOlsiZ2V0U2Vzc2lvbiIsInVzZUVmZmVjdCIsInVzZVJvdXRlciIsIkRhc2hib2FyZFJlZGlyZWN0Iiwicm91dGVyIiwicmVkaXJlY3QiLCJzZXNzaW9uIiwidXNlciIsImNvbXBhbnkiLCJwdXNoIiwidG9Mb3dlckNhc2UiLCJpbmNsdWRlcyJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(pages-dir-node)/./pages/index.js\n");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* binding */ Home),\n/* harmony export */   getServerSideProps: () => (/* binding */ getServerSideProps)\n/* harmony export */ });\n/* harmony import */ var next_auth_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! next-auth/react */ \"next-auth/react\");\n/* harmony import */ var next_auth_react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(next_auth_react__WEBPACK_IMPORTED_MODULE_0__);\n\nasync function getServerSideProps(context) {\n    const session = await (0,next_auth_react__WEBPACK_IMPORTED_MODULE_0__.getSession)(context);\n    if (!session || !session.user?.company) {\n        return {\n            redirect: {\n                destination: \"/login\",\n                permanent: false\n            }\n        };\n    }\n    return {\n        redirect: {\n            destination: `/dashboard/${session.user.company}`,\n            permanent: false\n        }\n    };\n}\nfunction Home() {\n    return null; // never rendered, just redirects\n}\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKHBhZ2VzLWRpci1ub2RlKS8uL3BhZ2VzL2luZGV4LmpzIiwibWFwcGluZ3MiOiI7Ozs7Ozs7QUFBNkM7QUFFdEMsZUFBZUMsbUJBQW1CQyxPQUFPO0lBQzlDLE1BQU1DLFVBQVUsTUFBTUgsMkRBQVVBLENBQUNFO0lBRWpDLElBQUksQ0FBQ0MsV0FBVyxDQUFDQSxRQUFRQyxJQUFJLEVBQUVDLFNBQVM7UUFDdEMsT0FBTztZQUNMQyxVQUFVO2dCQUNSQyxhQUFhO2dCQUNiQyxXQUFXO1lBQ2I7UUFDRjtJQUNGO0lBRUEsT0FBTztRQUNMRixVQUFVO1lBQ1JDLGFBQWEsQ0FBQyxXQUFXLEVBQUVKLFFBQVFDLElBQUksQ0FBQ0MsT0FBTyxFQUFFO1lBQ2pERyxXQUFXO1FBQ2I7SUFDRjtBQUNGO0FBRWUsU0FBU0M7SUFDdEIsT0FBTyxNQUFNLGlDQUFpQztBQUNoRCIsInNvdXJjZXMiOlsiQzpcXFVzZXJzXFxIZW5yeUZvc3RlclxcZHJlYW1jb24tZGFzaGJvYXJkXFxwYWdlc1xcaW5kZXguanMiXSwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgZ2V0U2Vzc2lvbiB9IGZyb20gXCJuZXh0LWF1dGgvcmVhY3RcIjtcclxuXHJcbmV4cG9ydCBhc3luYyBmdW5jdGlvbiBnZXRTZXJ2ZXJTaWRlUHJvcHMoY29udGV4dCkge1xyXG4gIGNvbnN0IHNlc3Npb24gPSBhd2FpdCBnZXRTZXNzaW9uKGNvbnRleHQpO1xyXG5cclxuICBpZiAoIXNlc3Npb24gfHwgIXNlc3Npb24udXNlcj8uY29tcGFueSkge1xyXG4gICAgcmV0dXJuIHtcclxuICAgICAgcmVkaXJlY3Q6IHtcclxuICAgICAgICBkZXN0aW5hdGlvbjogXCIvbG9naW5cIixcclxuICAgICAgICBwZXJtYW5lbnQ6IGZhbHNlLFxyXG4gICAgICB9LFxyXG4gICAgfTtcclxuICB9XHJcblxyXG4gIHJldHVybiB7XHJcbiAgICByZWRpcmVjdDoge1xyXG4gICAgICBkZXN0aW5hdGlvbjogYC9kYXNoYm9hcmQvJHtzZXNzaW9uLnVzZXIuY29tcGFueX1gLFxyXG4gICAgICBwZXJtYW5lbnQ6IGZhbHNlLFxyXG4gICAgfSxcclxuICB9O1xyXG59XHJcblxyXG5leHBvcnQgZGVmYXVsdCBmdW5jdGlvbiBIb21lKCkge1xyXG4gIHJldHVybiBudWxsOyAvLyBuZXZlciByZW5kZXJlZCwganVzdCByZWRpcmVjdHNcclxufVxyXG4iXSwibmFtZXMiOlsiZ2V0U2Vzc2lvbiIsImdldFNlcnZlclNpZGVQcm9wcyIsImNvbnRleHQiLCJzZXNzaW9uIiwidXNlciIsImNvbXBhbnkiLCJyZWRpcmVjdCIsImRlc3RpbmF0aW9uIiwicGVybWFuZW50IiwiSG9tZSJdLCJpZ25vcmVMaXN0IjpbXSwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///(pages-dir-node)/./pages/index.js\n");
 
 /***/ }),
 
@@ -52,17 +52,6 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ (() => {
 
 
-
-/***/ }),
-
-/***/ "fs":
-/*!*********************!*\
-  !*** external "fs" ***!
-  \*********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("fs");
 
 /***/ }),
 
@@ -110,17 +99,6 @@ module.exports = require("react");
 
 /***/ }),
 
-/***/ "react-dom":
-/*!****************************!*\
-  !*** external "react-dom" ***!
-  \****************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("react-dom");
-
-/***/ }),
-
 /***/ "react/jsx-dev-runtime":
 /*!****************************************!*\
   !*** external "react/jsx-dev-runtime" ***!
@@ -140,28 +118,6 @@ module.exports = require("react/jsx-dev-runtime");
 
 "use strict";
 module.exports = require("react/jsx-runtime");
-
-/***/ }),
-
-/***/ "stream":
-/*!*************************!*\
-  !*** external "stream" ***!
-  \*************************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("stream");
-
-/***/ }),
-
-/***/ "zlib":
-/*!***********************!*\
-  !*** external "zlib" ***!
-  \***********************/
-/***/ ((module) => {
-
-"use strict";
-module.exports = require("zlib");
 
 /***/ })
 

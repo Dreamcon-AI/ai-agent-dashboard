@@ -17,26 +17,32 @@ export default function Login() {
     }
   }, [status, session, router]);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setLoading(true);
+const handleLogin = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+  const result = await signIn("credentials", {
+    email,
+    password,
+    redirect: false,
+  });
 
-    if (result.ok) {
-      // ✅ Wait briefly to allow session to update
-      setTimeout(() => {
-        router.replace(`/dashboard/${email.split("@")[0]}`);
-      }, 250);
-    } else {
-      setLoading(false);
-      alert("Login failed. Check your credentials.");
-    }
-  };
+  if (result.ok) {
+    // ✅ Wait for session to hydrate
+    const interval = setInterval(async () => {
+      const fresh = await fetch("/api/auth/session");
+      const json = await fresh.json();
+      if (json?.user?.company) {
+        clearInterval(interval);
+        router.replace(`/dashboard/${json.user.company}`);
+      }
+    }, 100);
+  } else {
+    setLoading(false);
+    alert("Login failed. Check your credentials.");
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-700 via-gray-500 to-gray-300">

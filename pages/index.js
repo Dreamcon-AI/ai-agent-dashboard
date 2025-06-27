@@ -1,6 +1,4 @@
-// pages/index.js
 import { getSession } from "next-auth/react";
-import AIAgentDashboard from "../src/AIAgentDashboard";
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
@@ -15,12 +13,13 @@ export async function getServerSideProps(context) {
   }
 
   return {
-    props: { session },
+    redirect: {
+      destination: `/dashboard/${session.user.company}`,
+      permanent: false,
+    },
   };
 }
 
-export default function Home({ session }) {
-  if (!session?.user?.company) return <div>Loading...</div>;
-
-  return <AIAgentDashboard company={session.user.company} />;
+export default function Home() {
+  return null; // never rendered, just redirects
 }
