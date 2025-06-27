@@ -55,5 +55,5 @@ export default NextAuth({
   pages: {
     signIn: "/login",
   },
-  secret: "dreamcon-secret-123", // 🚨 Use ENV VAR in prod
+  secret: process.env.NEXTAUTH_SECRET,
 });
