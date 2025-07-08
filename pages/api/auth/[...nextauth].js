@@ -1,17 +1,11 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-
-// ✅ User database (use lowercase company names to match folder names)
-const users = [
-  { id: 1, name: "Zochert User", email: "zochert@dreamcon.com", password: "test", company: "zochert" },
-  { id: 2, name: "Hargrove User", email: "hargrove@dreamcon.com", password: "test", company: "hargrove" },
-  { id: 3, name: "S&S User", email: "ss@dreamcon.com", password: "test", company: "ss" },
-];
+import NextAuth from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
+import { supabase } from '../../../lib/supabase';
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
-      name: "Custom Login",
+      name: 'Credentials',
       credentials: {
         email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
@@ -19,41 +13,54 @@ export default NextAuth({
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        // 🔍 Look for matching user
-        const user = users.find(
-          (u) => u.email === email && u.password === password
-        );
+        // 🔐 Sign in with Supabase
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
 
-        if (user) {
-          return {
-            id: user.id,
-            name: user.name,
-            email: user.email,
-            company: user.company,
-          };
-        }
+        if (signInError || !signInData.user) return null;
 
-        // ❌ Login failed
-        return null;
+        // 📄 Fetch profile info
+        const { data: profile, error: profileError } = await supabase
+          .from('profiles')
+          .select('company, role')
+          .eq('id', signInData.user.id)
+          .single();
+
+        if (profileError) return null;
+
+        return {
+          id: signInData.user.id,
+          email: signInData.user.email,
+          company: profile.company,
+          role: profile.role,
+        };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
+        token.id = user.id;
+        token.email = user.email;
         token.company = user.company;
+        token.role = user.role;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token?.company) {
-        session.user.company = token.company;
-      }
+      session.user = {
+        id: token.id,
+        email: token.email,
+        company: token.company,
+        role: token.role,
+      };
       return session;
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
 });

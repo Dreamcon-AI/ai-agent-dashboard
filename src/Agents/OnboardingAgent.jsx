@@ -13,50 +13,74 @@ const OnboardingAgent = () => {
     address: "",
     ssn: "",
     birthdate: "",
+    company: "zochert",
     files: {
       w4: null,
       i9: null,
       orw4: null,
       directDeposit: null,
       drugScreen: null,
-      handbook: null
-    }
+      handbook: null,
+    },
   });
 
   const [scanResult, setScanResult] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleFileChange = (e, field) => {
-    setFormData({
-      ...formData,
-      files: { ...formData.files, [field]: e.target.files[0] },
-    });
+    setFormData((prev) => ({
+      ...prev,
+      files: { ...prev.files, [field]: e.target.files[0] },
+    }));
   };
 
-  const handleSubmit = () => {
-    // Simulate sending contact info to Directory Agent
-    console.log("Sending to Directory:", {
-      name: formData.name,
-      phone: formData.phone,
-      email: formData.email,
-      address: formData.address,
-    });
+  const handleSubmit = async () => {
+    try {
+      const data = new FormData();
 
-    if (window.__DirectoryAgent__?.receive) {
-      window.__DirectoryAgent__.receive({
-        name: formData.name,
-        phone: formData.phone,
-        email: formData.email,
-        address: formData.address,
-      });
+      // Add form fields
+      for (const key in formData) {
+        if (key !== "files") {
+          data.append(key, formData[key]);
+        }
+      }
+
+      // Add files
+      for (const key in formData.files) {
+        if (formData.files[key]) {
+          data.append(key, formData.files[key]);
+        }
+      }
+
+      const response = await fetch("http://localhost:4001/api/onboarding", {
+  method: "POST",
+  body: data,
+});
+
+      const result = await response.json();
+
+      if (result.success) {
+        setScanResult(`Submission successful. Employee ID: ${result.employeeId}`);
+        if (window.__DirectoryAgent__?.receive) {
+          window.__DirectoryAgent__.receive({
+            name: formData.name,
+            phone: formData.phone,
+            email: formData.email,
+            address: formData.address,
+            company: formData.company,
+          });
+        }
+      } else {
+        setScanResult("Submission failed.");
+      }
+    } catch (error) {
+      console.error("Error submitting onboarding:", error);
+      setScanResult("Submission failed due to error.");
     }
-
-    // Simulate basic online check
-    setScanResult("No public red flags found. Web scan completed.");
   };
 
   return (
@@ -68,21 +92,36 @@ const OnboardingAgent = () => {
             <div>
               <h2 className="text-xl font-semibold">Onboarding Agent</h2>
               <p className="text-sm text-muted-foreground">
-                Collects employee info, uploads documents, and runs light online scan.
+                Collects employee info, uploads documents, and stores them for directory access.
               </p>
             </div>
           </div>
 
-          <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="text" name="payRate" placeholder="Pay Rate" value={formData.payRate} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="text" name="position" placeholder="Position" value={formData.position} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="tel" name="phone" placeholder="Phone Number" value={formData.phone} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleInputChange} className="border p-2 rounded" />
-          <label className="font-semibold text-gray-700">Birthdate</label>
-          <input type="date" name="birthdate" value={formData.birthdate} onChange={handleInputChange} className="border p-2 rounded" />
-          <input type="password" name="ssn" placeholder="SSN" value={formData.ssn} onChange={handleInputChange} className="border p-2 rounded" />
+          {/* Basic Info */}
+          {[
+            { name: "name", placeholder: "Full Name" },
+            { name: "payRate", placeholder: "Pay Rate" },
+            { name: "position", placeholder: "Position" },
+            { name: "phone", placeholder: "Phone Number", type: "tel" },
+            { name: "email", placeholder: "Email", type: "email" },
+            { name: "address", placeholder: "Address" },
+            { name: "birthdate", label: "Birthdate", type: "date" },
+            { name: "ssn", placeholder: "SSN", type: "password" },
+          ].map(({ name, placeholder, type = "text", label }) => (
+            <div key={name}>
+              {label && <label className="font-semibold text-gray-700">{label}</label>}
+              <input
+                type={type}
+                name={name}
+                placeholder={placeholder}
+                value={formData[name]}
+                onChange={handleInputChange}
+                className="border p-2 rounded w-full"
+              />
+            </div>
+          ))}
 
+          {/* File Uploads */}
           <div className="grid grid-cols-2 gap-6 mt-6">
             {[
               { label: "W-4", field: "w4" },
@@ -96,9 +135,19 @@ const OnboardingAgent = () => {
                 <label className="font-semibold text-gray-700 mb-1">{label}</label>
                 <input
                   type="file"
+                  accept="application/pdf"
                   onChange={(e) => handleFileChange(e, field)}
                   className="border p-2 rounded bg-white"
                 />
+                {formData.files[field] && (
+                  <embed
+                    src={URL.createObjectURL(formData.files[field])}
+                    type="application/pdf"
+                    width="100%"
+                    height="200px"
+                    className="mt-2 border rounded"
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -109,7 +158,7 @@ const OnboardingAgent = () => {
 
           {scanResult && (
             <div className="mt-4 p-4 bg-green-100 text-green-800 rounded">
-              Online Scan Result: {scanResult}
+              {scanResult}
             </div>
           )}
         </CardContent>
@@ -119,4 +168,3 @@ const OnboardingAgent = () => {
 };
 
 export default OnboardingAgent;
-

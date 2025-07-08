@@ -20,6 +20,9 @@ import OnboardingAgent from "./Agents/OnboardingAgent";
 import TakeoffAgent from "./Agents/TakeoffAgent";
 import LeadAgent from './Agents/LeadAgent';
 import FleetAgent from './Agents/FleetAgent';
+import ComplianceAgent from './Agents/ComplianceAgent';
+import SocialMediaAgent from './Agents/SocialMediaAgent'
+import StatTrackerAgent from './Agents/StatTrackerAgent'
 import Image from "next/image";
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
@@ -72,7 +75,7 @@ const emojiMap = {
   NewHirePacket: "🗂️",
   EmployeeDirectoryManager: "📗",
   CommunicationManager: "✉️",
-  StatsReporter: "📊",
+  StatTrackerAgent: "📊",
   LeadTracker: "🧲",
   ProposalWriter: "📌",
   BidSubmitter: "📄",
@@ -98,7 +101,7 @@ const emojiMap = {
   CEOUpdates: "📋",
   LegalReview: "⚖️",
   BoardCommunicator: "📝",
-  RiskManager: "🚨",
+  ComplianceAgent: "🚨",
 };
 
 const agents = {
@@ -118,6 +121,14 @@ const agents = {
       instructions:
         "View and search stored employee contact info collected during onboarding.",
       component: DirectoryAgent,
+    },
+    {
+      dept: "Statistics",
+      agent: "StatTracker",
+      title: "Statistic Tracker",
+      instructions:
+        "Tracks and analyzes employee performance and productivity.",
+      component: StatTrackerAgent,
     },
   ],
 
@@ -148,7 +159,16 @@ const agents = {
       instructions:
         "Upload the GC contract and Zochert proposal PDFs. The agent will scan for legal red flags and mismatches.",
       component: LegalReviewAgent,
+     },    
+     {
+      dept: "Legal Compliance Monitoring",
+      agent: "ComplianceAgent",
+      title: "Compliance Agent",
+      instructions:
+        "Upload new documents or Check on compliance status for licenses or insurance",
+      component: ComplianceAgent,
     },
+  
   ],
 
   Finance: [
@@ -161,6 +181,18 @@ const agents = {
       component: FinancialPlanningAgent,
     },
   ],
+
+    "Public Relations": [
+    {
+      dept: "Social Media",
+      agent: "SocialMediaAgent",
+      title: "Social Media Agent",
+      instructions:
+        "Create social media posts, captions, and videos. Post them at to different platforms",
+      component: SocialMediaAgent,
+    },
+  ],
+
 
   Sales: [
     {
