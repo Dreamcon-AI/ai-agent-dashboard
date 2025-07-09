@@ -5,5 +5,6 @@ export default function DebugPage() {
       <p>SUPABASE_URL: {process.env.NEXT_PUBLIC_SUPABASE_URL}</p>
       <p>SUPABASE_KEY: {process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.slice(0, 10)}...</p>
     </div>
+    
   );
 }

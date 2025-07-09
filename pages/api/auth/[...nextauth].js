@@ -1,19 +1,27 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { supabase } from '../../../lib/supabase';
+import { createClient } from '@supabase/supabase-js';
+
+// ✅ Create a new Supabase client instance (server-side safe)
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 export default NextAuth({
   providers: [
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: "Email", type: "text" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'Email', type: 'text' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const { email, password } = credentials;
 
-        // 🔐 Sign in with Supabase
+        if (!email || !password) return null;
+
+        // 🔐 Sign in with Supabase (server-side)
         const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -21,7 +29,7 @@ export default NextAuth({
 
         if (signInError || !signInData.user) return null;
 
-        // 📄 Fetch profile info
+        // 📄 Fetch user profile
         const { data: profile, error: profileError } = await supabase
           .from('profiles')
           .select('company, role')
@@ -63,4 +71,5 @@ export default NextAuth({
     signIn: '/login',
   },
   secret: process.env.NEXTAUTH_SECRET,
+  debug: true, // optional: enables detailed logs in Vercel
 });
