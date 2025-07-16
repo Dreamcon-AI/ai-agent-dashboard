@@ -2,7 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/dashboard/zochert": "pages/dashboard/zochert.js",
-  "/[company]": "pages/[company].js",
-  "/login": "pages/login.js"
+  "/login": "pages/login.js",
+  "/[company]": "pages/[company].js"
 }

@@ -1,12 +1,16 @@
 import 'dotenv/config';
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+export const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+)
+
 
 async function createUser() {
   const { data, error } = await supabase.auth.admin.createUser({
-    email: 'zochert@dreamcon.com',
-    password: 'Password123!',
+    email: 'henry@dreamcon.us',
+    password: 'Cyclone1207!',
     email_confirm: true
   });
 
